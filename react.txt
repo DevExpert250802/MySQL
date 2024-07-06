@@ -1,0 +1,25 @@
+Step1:Install node js
+Step2:VS Code
+Step3:Create a new folder -> React
+Step4:Change directory to React
+Step5:npx create-react-app my-app
+Step6:Change directory to my-app
+Step7:npm start
+
+
+if this error come :-
+
+npm ERR! code ENOENT
+npm ERR! syscall open
+npm ERR! path C:\Users\user\Desktop\Dev programs\React/package.json
+npm ERR! errno -4058
+npm ERR! enoent ENOENT: no such file or directory, open 'C:\Users\user\Desktop\Dev programs\React\package.json'
+npm ERR! enoent This is related to npm not being able to find a file. 
+npm ERR! enoent
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\user\AppData\Local\npm-cache\_logs\2023-07-04T09_00_00_891Z-debug-0.log
+
+
+
+change your directory to my-app or whatever file you have choosen
