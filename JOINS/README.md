@@ -9,6 +9,24 @@ JOIN event
 ON customer.customer_id = event.customer_id;
 ```
 
+## -- Alias in MySQL (AS)
+
+```sql
+SELECT c.*,e.* 
+FROM customer AS c 
+INNER JOIN event AS e
+ON c.customer_id = e.customer_id;
+```
+
+## For specific coulums in Inner JOIN
+
+```sql 
+SELECT customer.customer_id, customer.name, event.event_id, event.action
+FROM customer
+JOIN event
+ON customer.customer_id = event.customer_id;
+```
+
 ## Left JOIN
 
 ```sql
@@ -49,12 +67,12 @@ ON action.action_id = event_v2.action_id;
 ## Join 3 tables
 
 ```sql
-SELECT *
+SELECT * 
 FROM action
 LEFT JOIN event_v2
-ON event_v2.action_id = action.action_id
+ON action.action_id = event_v2.action_id 
 LEFT JOIN customer
-ON customer.customer_id = event_v2.customer_id;
+ON event_v2.customer_id  = customer.customer_id;
 ```
 
 ## Select only customer and action names
@@ -63,9 +81,9 @@ ON customer.customer_id = event_v2.customer_id;
 SELECT action.name, customer.name
 FROM action
 LEFT JOIN event_v2
-ON event_v2.action_id = action.action_id
+ON action.action_id = event_v2.action_id 
 LEFT JOIN customer
-ON customer.customer_id = event_v2.customer_id;
+ON event_v2.customer_id  = customer.customer_id;
 ```
 
 ## Full JOIN
