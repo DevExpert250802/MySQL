@@ -1,12 +1,20 @@
-##      JOINS
+##      JOINS &  SET OPERATIONS
 
-## Inner JOIN
+## JOINS :
+## 1. Inner JOIN
 
 ```sql
 SELECT *
 FROM customer
 JOIN event
 ON customer.customer_id = event.customer_id;
+```
+
+## JOIN  without using JOIN keyword
+```sql
+SELECT * 
+FROM customer, event
+WHERE customer.customer_id = event.customer_id;
 ```
 
 ## -- Alias in MySQL (AS)
@@ -27,7 +35,8 @@ JOIN event
 ON customer.customer_id = event.customer_id;
 ```
 
-## Left JOIN
+
+## 2. Left JOIN
 
 ```sql
 SELECT *
@@ -46,7 +55,7 @@ ON customer.customer_id = event.customer_id
 WHERE event.customer_id IS NULL;
 ```
 
-## Right JOIN
+## 3.  Right JOIN
 
 ```sql
 SELECT *
@@ -86,21 +95,67 @@ LEFT JOIN customer
 ON event_v2.customer_id  = customer.customer_id;
 ```
 
-## Full JOIN
+## 4.  Full JOIN (Left JOIN + RIGHT JOIN)
 
 ```sql
 SELECT *
 FROM teacher
-FULL OUTER JOIN student
+LEFT JOIN student 
+ON teacher.age = student.age
+UNION
+SELECT *
+FROM teacher
+RIGHT JOIN student
 ON teacher.age = student.age;
 ```
+```sql
+SELECT teacher.*, student.*
+FROM teacher
+LEFT JOIN student 
+ON teacher.age = student.age
+UNION
+SELECT teacher.*, student.*
+FROM teacher 
+RIGHT JOIN student 
+ON teacher.age = student.age;
+```
+```sql
+SELECT *
+FROM teacher AS t
+LEFT JOIN student  AS s
+ON t.age = s.age
+UNION
+SELECT *
+FROM teacher AS t
+RIGHT JOIN student  AS s
+ON t.age = s.age;
+```
 
-## UNION
+## 5. CROSS JOIN
 
 ```sql
-SELECT age
+SELECT *
 FROM teacher
-UNION
+CROSS JOIN student;
+```
+
+## 6. SELF JOIN
+
+```sql
+SELECT T1.employee_name AS empname,T2.empname AS manager_name
+FROM emp AS T1
+JOIN emp AS T2
+ON T1.empid=T2.managerid;
+```
+
+## SET OPERATIONS (UNION, INTERSECT, MINUS)  :
+
+## 1.  UNION
+
+```sql
+SELECT age 
+FROM teacher
+UNION 
 SELECT age
 FROM student;
 ```
@@ -115,17 +170,52 @@ SELECT age
 FROM student;
 ```
 
-## CROSS JOIN
+## 2.  INTERSECT
 
 ```sql
-SELECT *
-FROM teacher
-CROSS JOIN student;
+SELECT DISTINCT teacher.age
+FROM teacher 
+JOIN student 
+ON teacher.age = student.age;
 ```
+
+```sql
+SELECT  DISTINCT age 
+FROM teacher
+JOIN  student
+using (age);
+```
+
+## 3.  MINUS
+
+## T1 - T2
+```sql
+SELECT  age  
+FROM teacher
+LEFT JOIN  student
+using (age)
+WHERE student.age IS NULL;
+```
+
+## T2 - T1
+```sql
+SELECT  age 
+FROM teacher
+RIGHT JOIN  student
+using (age)
+WHERE teacher.age IS NULL;
+```
+
 
 ## How can I manually create tables and insert data?
 
 ```sql
+
+CREATE DATABASE student;
+SHOW DATABASES;
+USE student;
+
+
 CREATE TABLE customer (
   customer_id integer PRIMARY KEY, 
   name varchar(256), 
@@ -185,7 +275,6 @@ VALUES
   (1, 'Tiffany', 28),
   (2, 'Mathew', 35);
 
-
 CREATE TABLE student (
   student_id integer PRIMARY KEY, 
   name varchar(256), 
@@ -196,6 +285,18 @@ INSERT INTO student
 VALUES 
   (1, 'Ben', 28),
   (2, 'Jenny', 21);
+
+CREATE TABLE emp(
+  empid integer PRIMARY KEY,
+  empname varchar(256),
+  managerid integer
+  );
+  
+  INSERT INTO emp VALUES 
+  (1, 'Agni', 3),
+  (2, 'Akash', 4),
+  (3, 'Dharti', 2),
+  (4, 'Vayu', 3);
 ```
 
 ## Select all the data
@@ -207,4 +308,5 @@ SELECT * FROM action;
 SELECT * FROM event_v2;
 SELECT * FROM teacher;
 SELECT * FROM student;
+SELECT * FROM emp;
 ```
